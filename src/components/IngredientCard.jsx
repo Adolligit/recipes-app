@@ -23,7 +23,7 @@ const IngredientCard = ({ history }) => {
   // // fetchCocktailIngredientsByList
 
   return (
-    <>Teste</>
+    <>Teste de tela</>
     // dataRecipes
     //   .map((element, index) => (
     //     <div
