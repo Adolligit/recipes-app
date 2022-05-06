@@ -26,9 +26,16 @@ function Login({ history }) {
   }
 
   function submitForm() {
+    const arr = JSON.stringify([]);
+    const obj = JSON.stringify({});
+
     localStorage.mealsToken = 1;
     localStorage.cocktailsToken = 1;
     localStorage.user = JSON.stringify({ email });
+    localStorage.doneRecipes = arr;
+    localStorage.favoriteRecipes = arr;
+    localStorage.inProgressRecipes = obj;
+
     history.push('/foods');
   }
 
