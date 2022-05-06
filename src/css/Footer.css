@@ -1,0 +1,11 @@
+.box-footer, .start-recipe-btn {
+  align-self: flex-end;
+  background: rgb(230, 126, 34);
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  width: 360px;
+}

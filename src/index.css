@@ -1,13 +1,85 @@
-body {
+/* * {
+  box-sizing: border-box;
+  color: rgb(125, 60, 152);
+  font-family: 'Oswald', sans-serif;;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
+
+body {
+  background-image: url(./images/fundo-purple.svg);
+  display: flex;
+  height: 640px;
+  width: 360px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.box-login {
+  background-image: url(./images/fundo-orange-img-white-75.svg);
+}
+
+.box-filters-category {
+  display: flex;
+  height: 80px;
+}
+
+.box-filters-category ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2px;
+  height: 100%;
+}
+
+.box-filters-category li {
+  background: rgb(230, 126, 34);
+  border-radius: 5px;
+  color: rgb(125, 60, 152);
+  list-style: none;
+  margin: 3px;
+}
+
+.filter-category {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px;
+  text-align: center;
+  width: 110px;
+}
+
+.box-principal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+ */
+
+.imagemAjuste {
+  max-width: 90%;
+  display: flex;
+}
+
+.imagemAjuste img {
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.recomendation-card {
+  width: 50%;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin: 5px;
+}
+
+.constainerSlide {
+  width: 200px;
+  overflow: hidden;
 }

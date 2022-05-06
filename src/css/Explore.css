@@ -1,0 +1,30 @@
+.box-explore {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  width: 360px;
+}
+
+.btn-explore-food {
+  align-items: center;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  height: 180px;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.btn-explore-food img {
+  border-radius: 20px;
+  width: 100%;
+}
+
+.title-btn-explore {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 900;
+  position: absolute;
+}
