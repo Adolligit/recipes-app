@@ -18,8 +18,6 @@ function Details({ history }) {
   const url = pathname.split('/').slice(1);
   const recipeType = (url[0] === 'foods') ? 'Meal' : 'Cocktail';
 
-  console.log(pathname);
-
   useEffect(() => {
     fetchAPI(`fetch${recipeType}ById`, url[1]).then((arr) => setRecipeDetails(arr));
 
@@ -50,6 +48,18 @@ function Details({ history }) {
     slidesToShow: 2,
     slidesToScroll: 2,
   };
+
+  function existRecipe() {
+    if (localStorage.doneRecipes) {
+      // const apiConfusa = (recipeType === 'Cocktail') ? 'Drink' : recipeType;
+
+      return JSON.parse(localStorage.doneRecipes)
+        .find(({ id }) => (
+          id === (recipeDetails[0].idMeal || recipeDetails[0].idDrink)
+        ));
+    }
+    return null;
+  }
 
   return recipeDetails.map((recipe) => (
     <div key="recipe">
@@ -172,11 +182,19 @@ function Details({ history }) {
           </div>
         </div>
       }
-      <Link to={ `${pathname}/in-progress` }>
-        <button className="start-recipe-btn" type="button" data-testid="start-recipe-btn">
-          Start Recipe
-        </button>
-      </Link>
+      {
+        !existRecipe() && (
+          <Link to={ `${pathname}/in-progress` }>
+            <button
+              className="start-recipe-btn"
+              type="button"
+              data-testid="start-recipe-btn"
+            >
+              Start Recipe
+            </button>
+          </Link>
+        )
+      }
     </div>
   ));
 }
