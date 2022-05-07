@@ -1,20 +1,20 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
-import Foods from './pages/Foods';
+import './App.css';
+import Details from './pages/Details';
+import DoneRecipes from './pages/DoneRecipes';
 import Drinks from './pages/Drinks';
+import Explore from './pages/Explore';
+import ExploreDrinks from './pages/ExploreDrinks';
+import ExploreFoods from './pages/ExploreFoods';
+import FavoriteRecipes from './pages/FavoriteRecipes';
+import Foods from './pages/Foods';
+import Ingredients from './pages/Ingredients';
 import InProgress from './pages/InProgress';
+import Login from './pages/Login';
 import Nationalities from './pages/Nationalities';
 import Profile from './pages/Profile';
-import DoneRecipes from './pages/DoneRecipes';
-import FavoriteRecipes from './pages/FavoriteRecipes';
-import Explore from './pages/Explore';
-import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinks from './pages/ExploreDrinks';
-import Ingredients from './pages/Ingredients';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Details from './pages/Details';
 
 function App() {
   return (
@@ -35,12 +35,12 @@ function App() {
         />
         <Route
           exact
-          path="/foods/id-da-receita:/in-progress"
+          path="/foods/:id-da-receita/in-progress"
           render={ (props) => <InProgress { ...props } /> }
         />
         <Route
           exact
-          path="/drinks/id-da-receita:/in-progress"
+          path="/drinks/:id-da-receita/in-progress"
           render={ (props) => <InProgress { ...props } /> }
         />
         <Route exact path="/explore" component={ Explore } />
