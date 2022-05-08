@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../css/RecipeCard.css';
 import { fetchAPI } from '../helpers/fetchAPI';
@@ -25,7 +25,7 @@ function IngredientCard({ history }) {
         data-testid={ `${i}-ingredient-card` }
       >
         <img
-          src={ `https://the${recipeType}db.com/images/ingredients/${ingredient}.png` }
+          src={ `https://www.the${recipeType.toLowerCase()}db.com/images/ingredients/${ingredient}-Small.png` }
           alt={ ingredient }
           data-testid={ `${i}-card-img` }
         />
