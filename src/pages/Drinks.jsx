@@ -28,8 +28,11 @@ function Drinks() {
   const message = 'Sorry, we haven\'t found any recipes for these filters.';
 
   useEffect(() => {
-    fetchAPI('fetchCocktailByName', '').then((data) => setDataRecipes(data));
+    if (!dataRecipes.length) {
+      fetchAPI('fetchCocktailByName', '').then((data) => setDataRecipes(data));
+    }
     fetchAPI('fetchCocktailListCategory', '').then((data) => setCategories(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setDataRecipes]);
 
   function getFilterCategory({ target: { value } }) {

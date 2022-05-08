@@ -28,8 +28,11 @@ function Foods() {
   const message = 'Sorry, we haven\'t found any recipes for these filters.';
 
   useEffect(() => {
-    fetchAPI('fetchMealByName', '').then((data) => setDataRecipes(data));
+    if (!dataRecipes.length) {
+      fetchAPI('fetchMealByName', '').then((data) => setDataRecipes(data));
+    }
     fetchAPI('fetchMealListCategory', '').then((data) => setCategories(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setDataRecipes, setDataCategory]);
 
   function getFilterCategory({ target: { value } }) {

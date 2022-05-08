@@ -1,4 +1,4 @@
-/* * {
+* {
   box-sizing: border-box;
   color: rgb(125, 60, 152);
   font-family: 'Oswald', sans-serif;;
@@ -59,7 +59,7 @@ code {
   justify-content: center;
   padding-bottom: 60px;
 }
- */
+ 
 
 .imagemAjuste {
   max-width: 90%;
