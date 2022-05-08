@@ -61,4 +61,4 @@ const fetchAPI = async (chooseUrl, query) => {
   }
 };
 
-export { fetchAPI, fetchByCategories, getIngredientImage };
+export { fetchAPI, fetchByCategories };
