@@ -19,6 +19,9 @@ function Details({ history }) {
   const url = pathname.split('/').slice(1);
   const recipeType = (url[0] === 'foods') ? 'Meal' : 'Cocktail';
 
+  console.log(pathname);
+  console.log(url[0], url[1], url);
+
   function copyText() {
     setCopiedLink(true);
     navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
@@ -34,6 +37,8 @@ function Details({ history }) {
       .then((arr) => setCocktailRecomendation(arr));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(mealRecomendation);
 
   const filterIngredients = Object
     .entries(recipeDetails[0])
@@ -158,7 +163,7 @@ function Details({ history }) {
                     key={ `teste${foodsRecomendation.strMeal}` }
                     data-testid={ `${index}-recomendation-card` }
                   >
-                    <Link to={ `/foods/${foodsRecomendation.idFoods}` }>
+                    <Link to={ `/foods/${foodsRecomendation.idMeal}` }>
                       <div>
                         <div className="imagemAjuste">
                           <img
