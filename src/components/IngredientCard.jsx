@@ -1,55 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
-// import RecipesContext from '../context/RecipesContext';
 import '../css/RecipeCard.css';
+import { fetchAPI } from '../helpers/fetchAPI';
 
-// const MAGIC_NUMBER = 12;
+const MAGIC_NUMBER = 12;
 
-const IngredientCard = ({ history }) => {
-  const { location } = history;
-  const { pathname } = location;
+function IngredientCard({ history }) {
+  const [ingredients, setIngredients] = useState([]);
 
-  console.log(history);
-  console.log(location);
-  console.log(pathname);
+  useEffect(() => {
+    const { location: { pathname } } = history;
+    const recipeType = (pathname.split('/')[2] === 'foods') ? 'Meal' : 'Cocktail';
 
-  // const { dataRecipes } = useContext(RecipesContext);
-  // const [dataIngredient, setDataIngrediente] = useState([]);
-
-  // const fetchRecipeType = (recipeType === 'foods') ? 'Meal' : 'Cocktail';
-
-  // // fetchMealIngredientsByList
-  // // fetchCocktailIngredientsByList
-
-  return (
-    <>Teste de tela</>
-    // dataRecipes
-    //   .map((element, index) => (
-    //     <div
-    //       key={ index }
-    //       data-testid={ `${index}-recipe-card` }
-    //       className="box-recipe-card"
-    //     >
-    //       <Link to={ `/${recipeType}/${element[idRecipeType]}` }>
-    //         <div
-    //           data-testid={ `${index}-card-name` }
-    //           className="box-title-recipe-card"
-    //         >
-    //           {element.strMeal || element.strDrink}
-    //         </div>
-    //         <div className="box-img-recipe-card">
-    //           <img
-    //             alt={ element.strMeal || element.strDrink }
-    //             src={ element.strMealThumb || element.strDrinkThumb }
-    //             data-testid={ `${index}-card-img` }
-    //           />
-    //         </div>
-    //       </Link>
-    //     </div>
-    //   )).slice(0, MAGIC_NUMBER)
-  );
-};
+    fetchAPI(`fetch${recipeType}IngredientsByList`, '')
+      .then((arr) => setIngredients(arr));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return ingredients.map(({ strIngredient, strIngredient1 }, i) => (
+    <div
+      key={ strIngredient || strIngredient1 }
+      data-testid={ `${i}-ingredient-card` }
+    >
+      
+    </div>
+  ));
+}
 
 IngredientCard.propTypes = { history: PropTypes.objectOf() }.isRequired;
 

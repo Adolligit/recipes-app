@@ -61,10 +61,4 @@ const fetchAPI = async (chooseUrl, query) => {
   }
 };
 
-async function getIngredientImage(url, img) {
-  const response = await fetch(`https://the${url}db.com/images/ingredients/${img}.png`);
-  const json = await response.json();
-  return Object.values(json)[0];
-}
-
 export { fetchAPI, fetchByCategories, getIngredientImage };
