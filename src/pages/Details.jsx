@@ -189,6 +189,8 @@ function Details({ history }) {
   ));
 }
 
+/* teste */
+
 Details.propTypes = { history: PropTypes.objectOf() }.isRequired;
 
 export default Details;
