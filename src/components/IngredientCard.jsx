@@ -1,55 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
-// import RecipesContext from '../context/RecipesContext';
+import RecipesContext from '../context/RecipesContext';
 import '../css/RecipeCard.css';
+import { fetchAPI } from '../helpers/fetchAPI';
 
-// const MAGIC_NUMBER = 12;
+const MAGIC_NUMBER = 12;
 
-const IngredientCard = ({ history }) => {
-  const { location } = history;
-  const { pathname } = location;
+function IngredientCard({ history }) {
+  const { setFunctions: { setDataRecipes } } = useContext(RecipesContext);
+  const [ingredients, setIngredients] = useState([]);
 
-  console.log(history);
-  console.log(location);
-  console.log(pathname);
+  const { location: { pathname } } = history;
+  const recipeType = (pathname.split('/')[2] === 'foods') ? 'Meal' : 'Cocktail';
 
-  // const { dataRecipes } = useContext(RecipesContext);
-  // const [dataIngredient, setDataIngrediente] = useState([]);
+  useEffect(() => {
+    fetchAPI(`fetch${recipeType}IngredientsByList`, '')
+      .then((arr) => setIngredients(arr));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // const fetchRecipeType = (recipeType === 'foods') ? 'Meal' : 'Cocktail';
+  function clickCard(ingredient) {
+    fetchAPI(`fetch${recipeType}ByIngredient`, ingredient)
+      .then((e) => {
+        setDataRecipes(e);
+        history.push(`/${pathname.split('/')[2]}`);
+      });
+  }
 
-  // // fetchMealIngredientsByList
-  // // fetchCocktailIngredientsByList
-
-  return (
-    <>Teste</>
-    // dataRecipes
-    //   .map((element, index) => (
-    //     <div
-    //       key={ index }
-    //       data-testid={ `${index}-recipe-card` }
-    //       className="box-recipe-card"
-    //     >
-    //       <Link to={ `/${recipeType}/${element[idRecipeType]}` }>
-    //         <div
-    //           data-testid={ `${index}-card-name` }
-    //           className="box-title-recipe-card"
-    //         >
-    //           {element.strMeal || element.strDrink}
-    //         </div>
-    //         <div className="box-img-recipe-card">
-    //           <img
-    //             alt={ element.strMeal || element.strDrink }
-    //             src={ element.strMealThumb || element.strDrinkThumb }
-    //             data-testid={ `${index}-card-img` }
-    //           />
-    //         </div>
-    //       </Link>
-    //     </div>
-    //   )).slice(0, MAGIC_NUMBER)
-  );
-};
+  return ingredients.map(({ strIngredient, strIngredient1 }, i) => {
+    const ingredient = strIngredient || strIngredient1;
+    return (
+      <button
+        type="button"
+        key={ ingredient }
+        data-testid={ `${i}-ingredient-card` }
+        onClick={ () => clickCard(ingredient) }
+      >
+        <img
+          src={ `https://www.the${recipeType.toLowerCase()}db.com/images/ingredients/${ingredient}-Small.png` }
+          alt={ ingredient }
+          data-testid={ `${i}-card-img` }
+        />
+        <h3 data-testid={ `${i}-card-name` }>{ ingredient }</h3>
+      </button>
+    );
+  }).slice(0, MAGIC_NUMBER);
+}
 
 IngredientCard.propTypes = { history: PropTypes.objectOf() }.isRequired;
 
