@@ -5,7 +5,7 @@
   justify-content: center;
   margin-bottom: 5px;
   padding: 5px;
-  width: 160px;
+  width: 180px;
 }
 
 .box-title-recipe-card {
@@ -17,7 +17,7 @@
   font-weight: 600;
   padding: 3px;
   text-align: center;
-  width: 140px;
+  width: 165px;
 }
 
 .box-img-recipe-card {
@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 140px;
+  width: 165px;
 }
 
 .box-img-recipe-card img {

@@ -1,15 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import IngredientCard from '../components/IngredientCard';
 
-function Ingredients() {
+function Ingredients({ history }) {
   return (
     <>
       <Header title="Explore Ingredients" />
-      <div>Ingredients</div>
+      <IngredientCard history={ history } />
       <Footer />
     </>
   );
 }
+
+Ingredients.propTypes = {
+  history: PropTypes.objectOf(),
+}.isRequerid;
 
 export default Ingredients;
