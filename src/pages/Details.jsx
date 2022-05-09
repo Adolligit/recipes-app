@@ -1,23 +1,22 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
+import Slide from '../components/Details/Slide';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { fetchAPI } from '../helpers/fetchAPI';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import StartContinueButton from '../components/Details/StartContinueButton';
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function Details({ history }) {
   const [recipeDetails, setRecipeDetails] = useState([{}]);
-
-  const [mealRecomendation, setMealRecomendation] = useState([]);
-  const [cocktailRecomendation, setCocktailRecomendation] = useState([]);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [recipeRecomendation, setRecipeRecomendation] = useState([]);
 
   const { location: { pathname } } = history;
   const url = pathname.split('/').slice(1);
   const recipeType = (url[0] === 'foods') ? 'Meal' : 'Cocktail';
+  const recipeTypeRecomendations = (url[0] === 'foods') ? 'Cocktail' : 'Meal';
 
   function copyText() {
     setCopiedLink(true);
@@ -27,13 +26,10 @@ function Details({ history }) {
   useEffect(() => {
     fetchAPI(`fetch${recipeType}ById`, url[1]).then((arr) => setRecipeDetails(arr));
 
-    fetchAPI('fetchMealRecomendation', url[1])
-      .then((arr) => setMealRecomendation(arr));
-
-    fetchAPI('fetchCocktailRecomendation', url[1])
-      .then((arr) => setCocktailRecomendation(arr));
+    fetchAPI(`fetch${recipeTypeRecomendations}Recomendation`, '')
+      .then((arr) => setRecipeRecomendation(arr));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [recipeTypeRecomendations]);
 
   const filterIngredients = Object
     .entries(recipeDetails[0])
@@ -44,16 +40,6 @@ function Details({ history }) {
     .entries(recipeDetails[0])
     .filter((key) => key[0].includes('strMeasure') && key[1])
     .map((e) => e[1]);
-
-  const magic6 = 6;
-
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 2,
-  };
 
   return recipeDetails.map((recipe) => (
     <div key="recipe">
@@ -116,81 +102,18 @@ function Details({ history }) {
           src={ `https://www.youtube.com/embed/${recipe.strYoutube.split('=')[1]}` }
         />)
       }
-      {
-        <div>
-          <div>Recomendações</div>
-          <div className="constainerSlide">
-            <Slider { ...settings }>
-              {
-                url[0] === 'foods'
-            && cocktailRecomendation.map((drinksRecomendation, index) => (
-              index < magic6 && (
-                <div
-                  className="recomendation-card"
-                  key={ `teste${drinksRecomendation.strMeal}` }
-                  data-testid={ `${index}-recomendation-card` }
-                >
-                  <Link to={ `/drinks/${drinksRecomendation.idDrink}` }>
-                    <div>
-                      <div className="imagemAjuste">
-                        <img
-                          alt={ drinksRecomendation.strDrink }
-                          src={ drinksRecomendation.strDrinkThumb }
-                        />
-                      </div>
-
-                      <p
-                        data-testid={ `${index}-recomendation-title` }
-                      >
-                        { drinksRecomendation.strDrink }
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              )))
-              }
-              {
-                url[0] === 'drinks'
-              && mealRecomendation.map((foodsRecomendation, index) => (
-                index < magic6 && (
-                  <div
-                    className="recomendation-card"
-                    key={ `teste${foodsRecomendation.strMeal}` }
-                    data-testid={ `${index}-recomendation-card` }
-                  >
-                    <Link to={ `/foods/${foodsRecomendation.idFoods}` }>
-                      <div>
-                        <div className="imagemAjuste">
-                          <img
-                            alt={ foodsRecomendation.strMeal }
-                            src={ foodsRecomendation.strMealThumb }
-                          />
-                        </div>
-                        <p
-                          data-testid={ `${index}-recomendation-title` }
-                        >
-                          { foodsRecomendation.strMeal }
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                )))
-              }
-            </Slider>
-          </div>
-        </div>
-      }
-      <Link to={ `${pathname}/in-progress` }>
-        <button className="start-recipe-btn" type="button" data-testid="start-recipe-btn">
-          Start Recipe
-        </button>
-      </Link>
+      { /* desculpa a gambiarra */ }
+      <Slide recipeRecomendation={ recipeRecomendation } url={ url[0] } />
+      <StartContinueButton
+        recipeDetails={ recipeDetails }
+        history={ history }
+        recipeType={ recipeType }
+        url={ url[1] }
+      />
     </div>
   ));
 }
 
-/* teste */
-
-Details.propTypes = { history: PropTypes.objectOf() }.isRequired;
+Details.propTypes = {}.isRequired;
 
 export default Details;
