@@ -27,7 +27,7 @@ function Login({ history }) {
 
   function submitForm() {
     const arr = JSON.stringify([]);
-    const obj = JSON.stringify({});
+    const obj = JSON.stringify({ cocktails: {}, meals: {} });
 
     localStorage.mealsToken = 1;
     localStorage.cocktailsToken = 1;

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Slide from '../components/Slide';
+import Slide from '../components/Details/Slide';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { fetchAPI } from '../helpers/fetchAPI';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import StartContinueButton from '../components/Details/StartContinueButton';
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function Details({ history }) {
   const [recipeDetails, setRecipeDetails] = useState([{}]);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -39,16 +40,6 @@ function Details({ history }) {
     .entries(recipeDetails[0])
     .filter((key) => key[0].includes('strMeasure') && key[1])
     .map((e) => e[1]);
-
-  function existRecipe() {
-    if (localStorage.doneRecipes) {
-      return JSON.parse(localStorage.doneRecipes)
-        .find(({ id }) => (
-          id === (recipeDetails[0].idMeal || recipeDetails[0].idDrink)
-        ));
-    }
-    return null;
-  }
 
   return recipeDetails.map((recipe) => (
     <div key="recipe">
@@ -111,20 +102,14 @@ function Details({ history }) {
           src={ `https://www.youtube.com/embed/${recipe.strYoutube.split('=')[1]}` }
         />)
       }
+      { /* desculpa a gambiarra */ }
       <Slide recipeRecomendation={ recipeRecomendation } url={ url[0] } />
-      {
-        !existRecipe() && (
-          <Link to={ `${pathname}/in-progress` }>
-            <button
-              className="start-recipe-btn"
-              type="button"
-              data-testid="start-recipe-btn"
-            >
-              Start Recipe
-            </button>
-          </Link>
-        )
-      }
+      <StartContinueButton
+        recipeDetails={ recipeDetails }
+        history={ history }
+        recipeType={ recipeType }
+        url={ url[1] }
+      />
     </div>
   ));
 }
