@@ -10,24 +10,26 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function Details({ history }) {
   const [recipeDetails, setRecipeDetails] = useState([{}]);
-
-  const [mealRecomendation, setMealRecomendation] = useState([]);
-  const [cocktailRecomendation, setCocktailRecomendation] = useState([]);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [recipeRecomendation, setRecipeRecomendation] = useState([]);
 
   const { location: { pathname } } = history;
   const url = pathname.split('/').slice(1);
   const recipeType = (url[0] === 'foods') ? 'Meal' : 'Cocktail';
+  const recipeTypeRecomendations = (url[0] === 'foods') ? 'Cocktail' : 'Meal';
+
+  function copyText() {
+    setCopiedLink(true);
+    navigator.clipboard.writeText(`http://localhost:3000${pathname}`);
+  }
 
   useEffect(() => {
     fetchAPI(`fetch${recipeType}ById`, url[1]).then((arr) => setRecipeDetails(arr));
 
-    fetchAPI('fetchMealRecomendation', url[1])
-      .then((arr) => setMealRecomendation(arr));
-
-    fetchAPI('fetchCocktailRecomendation', url[1])
-      .then((arr) => setCocktailRecomendation(arr));
+    fetchAPI(`fetch${recipeTypeRecomendations}Recomendation`, '')
+      .then((arr) => setRecipeRecomendation(arr));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [recipeTypeRecomendations]);
 
   const filterIngredients = Object
     .entries(recipeDetails[0])
@@ -51,8 +53,6 @@ function Details({ history }) {
 
   function existRecipe() {
     if (localStorage.doneRecipes) {
-      // const apiConfusa = (recipeType === 'Cocktail') ? 'Drink' : recipeType;
-
       return JSON.parse(localStorage.doneRecipes)
         .find(({ id }) => (
           id === (recipeDetails[0].idMeal || recipeDetails[0].idDrink)
@@ -78,12 +78,16 @@ function Details({ history }) {
         {recipe.strAlcoholic}
       </h3>
 
-      <button
-        type="button"
-        data-testid="share-btn"
-      >
-        <img src={ shareIcon } alt="share button" />
-      </button>
+      { !copiedLink ? (
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ copyText }
+        >
+          <img src={ shareIcon } alt="share button" />
+        </button>
+      ) : <p>Link copied!</p>}
+
       <button
         type="button"
         data-testid="favorite-btn"
@@ -125,26 +129,26 @@ function Details({ history }) {
             <Slider { ...settings }>
               {
                 url[0] === 'foods'
-            && cocktailRecomendation.map((drinksRecomendation, index) => (
+            && recipeRecomendation.map((recomendation, index) => (
               index < magic6 && (
                 <div
                   className="recomendation-card"
-                  key={ `teste${drinksRecomendation.strMeal}` }
+                  key={ `teste${recomendation.strDrink}` }
                   data-testid={ `${index}-recomendation-card` }
                 >
-                  <Link to={ `/drinks/${drinksRecomendation.idDrink}` }>
+                  <Link to={ `/drinks/${recomendation.idDrink}` }>
                     <div>
                       <div className="imagemAjuste">
                         <img
-                          alt={ drinksRecomendation.strDrink }
-                          src={ drinksRecomendation.strDrinkThumb }
+                          alt={ recomendation.strDrink }
+                          src={ recomendation.strDrinkThumb }
                         />
                       </div>
 
                       <p
                         data-testid={ `${index}-recomendation-title` }
                       >
-                        { drinksRecomendation.strDrink }
+                        { recomendation.strDrink }
                       </p>
                     </div>
                   </Link>
@@ -153,25 +157,25 @@ function Details({ history }) {
               }
               {
                 url[0] === 'drinks'
-              && mealRecomendation.map((foodsRecomendation, index) => (
+              && recipeRecomendation.map((recomendation, index) => (
                 index < magic6 && (
                   <div
                     className="recomendation-card"
-                    key={ `teste${foodsRecomendation.strMeal}` }
+                    key={ `teste${recomendation.strMeal}` }
                     data-testid={ `${index}-recomendation-card` }
                   >
-                    <Link to={ `/foods/${foodsRecomendation.idFoods}` }>
+                    <Link to={ `/foods/${recomendation.idMeal}` }>
                       <div>
                         <div className="imagemAjuste">
                           <img
-                            alt={ foodsRecomendation.strMeal }
-                            src={ foodsRecomendation.strMealThumb }
+                            alt={ recomendation.strMeal }
+                            src={ recomendation.strMealThumb }
                           />
                         </div>
                         <p
                           data-testid={ `${index}-recomendation-title` }
                         >
-                          { foodsRecomendation.strMeal }
+                          { recomendation.strMeal }
                         </p>
                       </div>
                     </Link>
@@ -198,6 +202,8 @@ function Details({ history }) {
     </div>
   ));
 }
+
+/* teste */
 
 Details.propTypes = { history: PropTypes.objectOf() }.isRequired;
 
