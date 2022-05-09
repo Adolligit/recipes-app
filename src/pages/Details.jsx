@@ -7,7 +7,6 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import StartContinueButton from '../components/Details/StartContinueButton';
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function Details({ history }) {
   const [recipeDetails, setRecipeDetails] = useState([{}]);
   const [copiedLink, setCopiedLink] = useState(false);
