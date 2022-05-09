@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
+import Slide from '../components/Slide';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { fetchAPI } from '../helpers/fetchAPI';
@@ -40,16 +39,6 @@ function Details({ history }) {
     .entries(recipeDetails[0])
     .filter((key) => key[0].includes('strMeasure') && key[1])
     .map((e) => e[1]);
-
-  const magic6 = 6;
-
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 2,
-  };
 
   function existRecipe() {
     if (localStorage.doneRecipes) {
@@ -122,70 +111,7 @@ function Details({ history }) {
           src={ `https://www.youtube.com/embed/${recipe.strYoutube.split('=')[1]}` }
         />)
       }
-      {
-        <div>
-          <div>Recomendações</div>
-          <div className="constainerSlide">
-            <Slider { ...settings }>
-              {
-                url[0] === 'foods'
-            && recipeRecomendation.map((recomendation, index) => (
-              index < magic6 && (
-                <div
-                  className="recomendation-card"
-                  key={ `teste${recomendation.strDrink}` }
-                  data-testid={ `${index}-recomendation-card` }
-                >
-                  <Link to={ `/drinks/${recomendation.idDrink}` }>
-                    <div>
-                      <div className="imagemAjuste">
-                        <img
-                          alt={ recomendation.strDrink }
-                          src={ recomendation.strDrinkThumb }
-                        />
-                      </div>
-
-                      <p
-                        data-testid={ `${index}-recomendation-title` }
-                      >
-                        { recomendation.strDrink }
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              )))
-              }
-              {
-                url[0] === 'drinks'
-              && recipeRecomendation.map((recomendation, index) => (
-                index < magic6 && (
-                  <div
-                    className="recomendation-card"
-                    key={ `teste${recomendation.strMeal}` }
-                    data-testid={ `${index}-recomendation-card` }
-                  >
-                    <Link to={ `/foods/${recomendation.idMeal}` }>
-                      <div>
-                        <div className="imagemAjuste">
-                          <img
-                            alt={ recomendation.strMeal }
-                            src={ recomendation.strMealThumb }
-                          />
-                        </div>
-                        <p
-                          data-testid={ `${index}-recomendation-title` }
-                        >
-                          { recomendation.strMeal }
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                )))
-              }
-            </Slider>
-          </div>
-        </div>
-      }
+      <Slide recipeRecomendation={ recipeRecomendation } url={ url[0] } />
       {
         !existRecipe() && (
           <Link to={ `${pathname}/in-progress` }>
@@ -203,8 +129,6 @@ function Details({ history }) {
   ));
 }
 
-/* teste */
-
-Details.propTypes = { history: PropTypes.objectOf() }.isRequired;
+Details.propTypes = {}.isRequired;
 
 export default Details;
