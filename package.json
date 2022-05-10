@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "clipboardy": "^2.1.0",
     "cypress": "^9.3.1",
     "cypress-multi-reporters": "^1.4.0",
