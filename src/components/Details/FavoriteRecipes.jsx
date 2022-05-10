@@ -65,17 +65,17 @@ function FavoriteRecipes({ recipeDetails, url }) {
         <img src={ whiteHeartIcon } alt="favorite button" className="favoriteWhite" />
       </button>
     )
-    // eslint-disable-next-line operator-linebreak
-      :
-      <button
-        type="button"
-        data-testid="favorite-btn"
-        onClick={ favRecipe }
-        src={ blackHeartIcon }
-        alt="favorite button"
-      >
-        <img src={ blackHeartIcon } alt="favorite button" className="favoriteBlack" />
-      </button>
+      : (
+        <button
+          type="button"
+          data-testid="favorite-btn"
+          onClick={ favRecipe }
+          src={ blackHeartIcon }
+          alt="favorite button"
+        >
+          <img src={ blackHeartIcon } alt="favorite button" className="favoriteBlack" />
+        </button>
+      )
   );
 }
 
