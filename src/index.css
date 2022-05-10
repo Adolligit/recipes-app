@@ -83,3 +83,15 @@ code {
   width: 200px;
   overflow: hidden;
 }
+
+.favoriteWhite {
+  max-width: 100%;
+}
+
+.favoriteBlack {
+  max-width: 80%;
+}
+
+.share {
+  max-width: 100%;
+}

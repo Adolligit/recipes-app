@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Slide from '../components/Details/Slide';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
+import FavoriteRecipes from '../components/Details/FavoriteRecipes';
+import Slide from '../components/Details/Slide';
+import StartContinueButton from '../components/Details/StartContinueButton';
 import { fetchAPI } from '../helpers/fetchAPI';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import StartContinueButton from '../components/Details/StartContinueButton';
 
 function Details({ history }) {
   const [recipeDetails, setRecipeDetails] = useState([{}]);
@@ -67,12 +67,20 @@ function Details({ history }) {
         </button>
       ) : <p>Link copied!</p>}
 
-      <button
+      {/* <button
         type="button"
         data-testid="favorite-btn"
       >
         <img src={ whiteHeartIcon } alt="favorite button" />
-      </button>
+      </button> */}
+
+      <FavoriteRecipes
+        recipeDetails={ recipeDetails }
+        history={ history }
+        recipeType={ recipeType }
+        url={ url[1] }
+      />
+
       <h3 data-testid="recipe-category">
         {recipe.strCategory}
       </h3>
