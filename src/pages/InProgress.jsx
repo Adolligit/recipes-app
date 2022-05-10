@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchAPI } from '../helpers/fetchAPI';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import '../css/InProgress.css';
+// import '../css/InProgress.css';
 
 function InProgress(props) {
   const { history } = props;
