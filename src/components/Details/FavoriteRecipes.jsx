@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
-function FavoriteRecipes({ recipeDetails /* history */ }) {
-  /* const { location: { pathname } } = history; */
-  console.log(recipeDetails);
+function FavoriteRecipes({ recipeDetails, url }) {
   const [hearthRecipe, setHearthRecipe] = useState(false);
+
+  useEffect(() => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'))
+    || [];
+    const teste = favoriteRecipes.find(({ id }) => id === url);
+    console.log(teste ? 1 : 0);
+    setHearthRecipe(teste ? 1 : 0);
+  }, [url]);
 
   const favoriteMeal = {
     id: recipeDetails[0].idMeal,
@@ -21,7 +27,7 @@ function FavoriteRecipes({ recipeDetails /* history */ }) {
     id: recipeDetails[0].idDrink,
     type: 'drink',
     nationality: '',
-    category: '',
+    category: recipeDetails[0].strCategory,
     alcoholicOrNot: recipeDetails[0].strAlcoholic,
     name: recipeDetails[0].strDrink,
     image: recipeDetails[0].strDrinkThumb,
@@ -41,8 +47,8 @@ function FavoriteRecipes({ recipeDetails /* history */ }) {
     } else {
       setHearthRecipe(false);
       const itemsNotRemoved = favoriteRecipes
-        .filter((element) => element.id !== favoriteMeal.id
-        || favoriteDrink.id);
+        .filter((element) => element.id
+        !== (favoriteMeal.id || favoriteDrink.id));
       localStorage.setItem('favoriteRecipes', JSON.stringify(itemsNotRemoved));
     }
   }

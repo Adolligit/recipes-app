@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function StartContinueButton({ recipeDetails, history, recipeType, url }) {
   const { location: { pathname } } = history;
 
-  console.log(url);
+  /*  console.log(url); */
   function existRecipe() {
     if (localStorage.doneRecipes) {
       return JSON.parse(localStorage.doneRecipes)

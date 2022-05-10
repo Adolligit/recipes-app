@@ -76,8 +76,6 @@ function Details({ history }) {
 
       <FavoriteRecipes
         recipeDetails={ recipeDetails }
-        history={ history }
-        recipeType={ recipeType }
         url={ url[1] }
       />
 
