@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-
-/* cy.get('[data-testid="0-horizontal-image"]');
-cy.get('[data-testid="0-horizontal-top-text"]');
-cy.get('[data-testid="0-horizontal-name"]');
-cy.get('[data-testid="0-horizontal-share-btn"]');
-cy.get('[data-testid="0-horizontal-favorite-btn"]'); */
 
 function FavoriteRecipes() {
+  const [copiedLink, setCopiedLink] = useState(false);
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+
+  function copyText() {
+    setCopiedLink(true);
+    console.log(favoriteRecipes);
+    const copiedText = favoriteRecipes.map((element) => (
+      navigator.clipboard.writeText(`http://localhost:3000/${element.type}s/${element.id}`)
+    ));
+    return copiedText;
+  }
+
   const favoriteCards = favoriteRecipes.map((element, index) => (
     <div key={ index }>
       <img
@@ -21,25 +26,37 @@ function FavoriteRecipes() {
       <p
         data-testid={ `${index}-horizontal-top-text` }
       >
-        {element.category}
+        {element.type === 'food' ? (
+          `${element.nationality} - ${element.category}`
+        ) : element.alcoholicOrNot}
       </p>
       <p
         data-testid={ `${index}-horizontal-name` }
       >
         {element.name}
       </p>
+
+      { !copiedLink ? (
+        <button
+          type="button"
+          onClick={ copyText }
+        >
+          <img
+            src={ shareIcon }
+            alt="share button"
+            data-testid={ `${index}-horizontal-share-btn` }
+          />
+        </button>
+      ) : <p>Link copied!</p>}
+
       <button
         type="button"
-        data-testid={ `${index}-horizontal-share-btn` }
-        /* onClick={ copyText } */
       >
-        <img src={ shareIcon } alt="share button" />
-      </button>
-      <button
-        type="button"
-        data-testid={ `${index}-horizontal-favorite-btn` }
-      >
-        <img src={ whiteHeartIcon } alt="favorite button" />
+        <img
+          src={ blackHeartIcon }
+          alt="favorite button"
+          data-testid={ `${index}-horizontal-favorite-btn` }
+        />
       </button>
     </div>
   ));
@@ -78,5 +95,7 @@ function FavoriteRecipes() {
     </>
   );
 }
+
+FavoriteRecipes.propTypes = {}.isRequired;
 
 export default FavoriteRecipes;
