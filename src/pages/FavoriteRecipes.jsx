@@ -5,15 +5,23 @@ import shareIcon from '../images/shareIcon.svg';
 
 function FavoriteRecipes() {
   const [copiedLink, setCopiedLink] = useState(false);
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const [updatePage, setUpdatePage] = useState(false);
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
   function copyText() {
     setCopiedLink(true);
-    console.log(favoriteRecipes);
+
     const copiedText = favoriteRecipes.map((element) => (
       navigator.clipboard.writeText(`http://localhost:3000/${element.type}s/${element.id}`)
     ));
     return copiedText;
+  }
+
+  function removeFromFavorite(idRemove) {
+    const newFavorites = favoriteRecipes.filter(({ id }) => id !== idRemove);
+
+    localStorage.favoriteRecipes = JSON.stringify(newFavorites);
+    setUpdatePage(!updatePage);
   }
 
   const favoriteCards = favoriteRecipes.map((element, index) => (
@@ -48,9 +56,9 @@ function FavoriteRecipes() {
           />
         </button>
       ) : <p>Link copied!</p>}
-
       <button
         type="button"
+        onClick={ () => removeFromFavorite(element.id) }
       >
         <img
           src={ blackHeartIcon }
@@ -66,28 +74,20 @@ function FavoriteRecipes() {
       <Header title="Favorite Recipes" />
       <div>Favorite Recipes</div>
       <button
-        className="btn-explore-food"
         data-testid="filter-by-all-btn"
         type="button"
-        /* onClick={ () => history.push('/explore/foods') } */
       >
         All
       </button>
-
       <button
-        className="btn-explore-food"
         data-testid="filter-by-food-btn"
         type="button"
-        /* onClick={ () => history.push('/explore/foods') } */
       >
         Food
       </button>
-
       <button
-        className="btn-explore-food"
         data-testid="filter-by-drink-btn"
         type="button"
-        /* onClick={ () => history.push('/explore/foods') } */
       >
         Drink
       </button>
