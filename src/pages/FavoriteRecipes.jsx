@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import '../css/FavoriteRecipes.css';
 
 function FavoriteRecipes() {
   const [copiedLink, setCopiedLink] = useState(false);
@@ -67,23 +69,24 @@ function FavoriteRecipes() {
       {
         favoriteCards.map((element, index) => (
           <div key={ index }>
-            <img
-              data-testid={ `${index}-horizontal-image` }
-              src={ element.image }
-              alt={ element.name }
-            />
-            <p
-              data-testid={ `${index}-horizontal-top-text` }
-            >
-              {element.type === 'food' ? (
-                `${element.nationality} - ${element.category}`
-              ) : element.alcoholicOrNot}
-            </p>
-            <p
-              data-testid={ `${index}-horizontal-name` }
-            >
-              {element.name}
-            </p>
+            <Link to={ `/${element.type}s/${element.id}` }>
+              <img
+                className="img-recipe"
+                data-testid={ `${index}-horizontal-image` }
+                src={ element.image }
+                alt={ element.name }
+              />
+              <p
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                {element.type === 'food' ? (
+                  `${element.nationality} - ${element.category}`
+                ) : element.alcoholicOrNot}
+              </p>
+              <p data-testid={ `${index}-horizontal-name` }>
+                {element.name}
+              </p>
+            </Link>
             { !copiedLink ? (
               <button
                 type="button"
